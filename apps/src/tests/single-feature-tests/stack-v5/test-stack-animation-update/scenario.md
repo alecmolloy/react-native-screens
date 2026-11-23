@@ -34,7 +34,7 @@ assertable with Detox.
 - Static: the screen does not move at all and stays fully visible for the whole
   transition.
 - **Known issue:** on iOS the back swipe plays the `default` slide, whatever
-  the `animation` of the screen (labs #2066).
+  the `animation` of the screen (https://github.com/software-mansion/react-native-screens-labs/issues/2066).
 
 ## Steps
 

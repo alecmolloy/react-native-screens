@@ -36,7 +36,7 @@ gesture, are not assertable with Detox; only the resulting stack would be.
   fade, and no window background shows between them. A header that appears,
   disappears or changes its title does so in the same frame.
 - **Known issue:** on iOS the back swipe of a `none` screen slides like a
-  `default` one (labs #2066).
+  `default` one (https://github.com/software-mansion/react-native-screens-labs/issues/2066).
 
 ## Steps
 
@@ -45,10 +45,11 @@ gesture, are not assertable with Detox; only the resulting stack would be.
 1. Launch the app and navigate to the **Stack Animation None** screen (on
    Android, launch the screen directly, see Prerequisites).
 
-   - [ ] "Home" is yellow with a dark frame at the screen edge and no visible
-         header. "next push" and "this screen" read `none`, "next push header
-         hidden" reads `true`, and "Push Blue" and "Push Red" are the only
-         buttons: there is no "Pop" button.
+   - [ ] "Home" is yellow with a dark frame at the screen edge.
+   - [ ] No header is visible.
+   - [ ] "next push" and "this screen" both read `none`.
+   - [ ] "next push header hidden" reads `true`.
+   - [ ] "Push Blue" and "Push Red" are the only buttons.
 
 ---
 
