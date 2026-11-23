@@ -10,7 +10,7 @@ different preset, so whose animation plays is visible. Pass: every replace plays
 the expected animation in the expected draw order, no other screen of the stack
 is ever visible, and the back gesture after a replace pops the new top with its
 own animation. A replace with the default value at every depth, and a
-multi-replace, are covered by `test-stack-animation-operations-android`.
+multi-replace, are covered by `test-stack-animation-operations`.
 
 **OS test creation version:** Android API Level 37, iOS 18.6 and 27.2.
 
