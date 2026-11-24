@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import FullScreenModalHostNativeComponent from '../../../fabric/modals/full-screen-modal/FullScreenModalHostNativeComponent';
 import type { FullScreenModalProps } from './FullScreenModal.types';
+import type { FullScreenModalOverContentAnimation } from './FullScreenModalOverContent.types';
+import type { FullScreenModalReplacingContentAnimation } from './FullScreenModalReplacingContent.types';
 
 /**
  * UIKit `modalPresentationStyle` the full-screen modal host presents with.
@@ -13,6 +15,10 @@ export type FullScreenModalPresentationStyle =
 
 export interface FullScreenModalBaseProps extends FullScreenModalProps {
   presentationStyle: FullScreenModalPresentationStyle;
+  animation?:
+    | FullScreenModalReplacingContentAnimation
+    | FullScreenModalOverContentAnimation
+    | undefined;
 }
 
 /**
