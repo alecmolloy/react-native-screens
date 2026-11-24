@@ -3,14 +3,18 @@
 ## Details
 
 **Description:** This test focuses on handling menus attached to items in the header on iOS.
+The on/off state of menu items is kept while the menu stays configured: it survives
+navigation and adding, removing or reordering other header items, and goes back to the
+initial state only when the menu itself changes or its header item is removed.
 
 **OS test creation version:** iOS 26.4, iPadOS 26.4
 
 ## E2E test
 
-Incomplete: Covers all manual scenario steps except the **Menu representation**
-section. On iOS 27 the header item "Menu 1" is only checked to exist, not to be
-visible.
+Incomplete: all steps of **Toggle state retention** and **Menu representation (iOS 26)**
+are not automated. For manual testing perform all steps of **Toggle state retention**
+and **Menu representation (iOS 26)**. On iOS 27 the header item "Menu 1" is only
+checked to exist, not to be visible.
 
 ## Prerequisites
 
@@ -20,8 +24,8 @@ visible.
 
 - For now, menus don't appear on items with custom views
 - Menu representation section requires iOS >= 16
-- There is a bug present when you send change item command, and change the number of items
-  before displaying the menu, then the checkmark doesn't change despite the toast showing.
+- **Toggle state retention**: tap a toast to dismiss it, and dismiss every toast
+  before the next step. Close an open menu by tapping outside of it.
 
 ## Steps on iPhone
 
@@ -29,33 +33,33 @@ visible.
 
 1. Launch the app and navigate to the **Stack Header Menu (iOS)** screen.
 2. Click on the Menu 1 item
-    - [ ] The bubble morphs into a menu with four items and a submenu
+   - [ ] The bubble morphs into a menu with four items and a submenu
 3. Click on Action 1-1
-    - [ ] A toast "Clicked Action 1-1" is displayed
+   - [ ] A toast "Clicked Action 1-1" is displayed
 4. Click on Toggle 1-1 inside Menu
-    - [ ] Menu is hidden
-    - [ ] A toast "Selected "toggle 1-1"" is displayed
-    - [ ] When Menu 1 is reopened, a checkmark is displayed next to Toggle 1-1
+   - [ ] Menu is hidden
+   - [ ] A toast "Selected "toggle 1-1"" is displayed
+   - [ ] When Menu 1 is reopened, a checkmark is displayed next to Toggle 1-1
 5. Click on Toggle 1-3 inside Menu
-    - [ ] Menu is hidden
-    - [ ] A toast "Selected "toggle 1-1", "toggle 1-3"" is displayed
-    - [ ] When Menu 1 is reopened, a checkmark is displayed next to Toggle 1-1 and Toggle 1-3
+   - [ ] Menu is hidden
+   - [ ] A toast "Selected "toggle 1-1", "toggle 1-3"" is displayed
+   - [ ] When Menu 1 is reopened, a checkmark is displayed next to Toggle 1-1 and Toggle 1-3
 6. Click on Toggle 1-1 inside Menu again
-    - [ ] Menu is hidden
-    - [ ] A toast "Selected "toggle 1-3"" is displayed
-    - [ ] When Menu 1 is reopened, a checkmark is displayed only next to Toggle 1-3
+   - [ ] Menu is hidden
+   - [ ] A toast "Selected "toggle 1-3"" is displayed
+   - [ ] When Menu 1 is reopened, a checkmark is displayed only next to Toggle 1-3
 7. Click on Submenu with Radio
-    - [ ] Radio 1-1 is selected by default
+   - [ ] Radio 1-1 is selected by default
 8. Click on Radio 1-1 again
-    - [ ] No toast is displayed
-9.  Click on SubSubmenu with Radio, click on Radio 1-2
-    - [ ] Whole menu is hidden
-    - [ ] A toast "Selected unique "radio 1-2"" is displayed
-    - [ ] When Menu 1 > Submenu with Radio is reopened, Radio 1-1 is no longer checked
-    - [ ] When Menu 1 > Submenu with Radio > SubSubmenu with Radio is reopened, Radio 1-2 is checked
+   - [ ] No toast is displayed
+9. Click on SubSubmenu with Radio, click on Radio 1-2
+   - [ ] Whole menu is hidden
+   - [ ] A toast "Selected unique "radio 1-2"" is displayed
+   - [ ] When Menu 1 > Submenu with Radio is reopened, Radio 1-1 is no longer checked
+   - [ ] When Menu 1 > Submenu with Radio > SubSubmenu with Radio is reopened, Radio 1-2 is checked
 10. Click on screen title
-    - [ ] The title should transform into a menu with two actions
-    - [ ] Clicking either actions should display a toast
+    - [ ] The title should transform into a menu with two actions and "Title Toggle"
+    - [ ] Clicking either action should display a toast
 
 ---
 
@@ -63,17 +67,17 @@ visible.
 
 1. Relaunch the app and navigate to the **Stack Header Menu (iOS)** screen.
 2. In `setMenuItemOptions`, select `title` to be "New Title" and click `Send setMenuItemOptions`
-    - [ ] When Menu 1 is opened, first item is New Title
+   - [ ] When Menu 1 is opened, first item is New Title
 3. Close the menu. Select `title` to be "no change", `icon` to be "star.fill" and click `Send setMenuItemOptions`
-    - [ ] When Menu 1 is opened, first item is New Title and has star icon
+   - [ ] When Menu 1 is opened, first item is New Title and has star icon
 4. Close the menu. Select `target id` to be "toggle-1-1", `toggleState` to be "true" and click `Send setMenuItemOptions`
-    - [ ] When Menu 1 is opened, Toggle 1-1 is checked
-    - [ ] A toast "Selected "toggle 1-1"" is displayed
+   - [ ] When Menu 1 is opened, Toggle 1-1 is checked
+   - [ ] A toast "Selected "toggle 1-1"" is displayed
 5. Close the menu. Select `target id` to be "radio-1-1", `toggleState` to be "false" and click `Send setMenuItemOptions`
-    - [ ] When Menu 1 > Submenu with Radio is opened, Radio 1-1 is still selected (no change)
+   - [ ] When Menu 1 > Submenu with Radio is opened, Radio 1-1 is still selected (no change)
 6. Close the menu. Select `target id` to be "radio-1-2", `toggleState` to be "true" and click `Send setMenuItemOptions`
-    - [ ] When Menu 1 > Submenu with Radio > SubSubMenu with Radio is opened, Radio 1-1 is deselected and Radio 1-2 is selected instead
-    - [ ] A toast "Selected unique "radio 1-2"" is displayed
+   - [ ] When Menu 1 > Submenu with Radio > SubSubMenu with Radio is opened, Radio 1-1 is deselected and Radio 1-2 is selected instead
+   - [ ] A toast "Selected unique "radio 1-2"" is displayed
 
 ---
 
@@ -81,9 +85,83 @@ visible.
 
 1. Relaunch the app and navigate to the **Stack Header Menu (iOS)** screen.
 2. In `setMenuOptions`, select `title` to be "New Title" and click `Send setMenuOptions`
-    - [ ] When Menu 1 is opened, the submenu is named "New Title"
+   - [ ] When Menu 1 is opened, the submenu is named "New Title"
 3. Close the menu. Select `title` to be "no change", `icon` to be "bell.fill" and click `Send setMenuOptions`
-    - [ ] When Menu 1 is opened, the submenu is still named "New Title" and has bell icon
+   - [ ] When Menu 1 is opened, the submenu is still named "New Title" and has bell icon
+
+---
+
+### Toggle state retention
+
+1. Relaunch the app and navigate to the **Stack Header Menu (iOS)** screen. Open
+   "Menu 1" and tap "Toggle 1-2".
+
+   - [ ] The menu closes and a toast `Selected "toggle-1-2"` is displayed.
+
+2. Open "Menu 1", tap "Submenu with Radio", tap "SubSubMenu with Radio", then tap
+   "Radio 1-2".
+
+   - [ ] The menu closes and a toast `Selected unique "radio-1-2"` is displayed.
+
+3. Tap the header title "Header Menu", then tap "Title Toggle".
+
+   - [ ] The menu closes and a toast `Title selected "title-toggle"` is displayed.
+
+4. Tap "Push Details", tap "Pop", then open "Menu 1".
+
+   - [ ] "Toggle 1-2" has a checkmark.
+   - [ ] No toast is displayed.
+
+5. Tap "Submenu with Radio", then tap "SubSubMenu with Radio".
+
+   - [ ] "Radio 1-2" has a checkmark and "Radio 1-1" has none.
+
+6. Close the menu, then tap the header title "Header Menu".
+
+   - [ ] "Title Toggle" has a checkmark.
+
+7. Close the menu, tap "trailingItemsReversed: false", then open "Menu 1".
+
+   - [ ] "Menu 1" is the last header item, after the square item, and the
+         button reads "trailingItemsReversed: true".
+   - [ ] "Toggle 1-2" has a checkmark.
+   - [ ] No toast is displayed.
+
+8. Close the menu, tap "trailingItemsReversed: true", then open "Menu 1".
+
+   - [ ] "Menu 1" is before the square item again.
+   - [ ] "Toggle 1-2" has a checkmark.
+   - [ ] No toast is displayed.
+
+9. Close the menu, tap "Toggle trailing items count (2/4)" once, then open
+   "Menu 1".
+
+   - [ ] The header shows a third item and the button reads "Toggle trailing
+         items count (3/4)".
+   - [ ] "Toggle 1-2" has a checkmark.
+   - [ ] No toast is displayed.
+
+10. Close the menu, tap "Toggle trailing items count (3/4)" 4 times, then open
+    "Menu 1".
+
+    - [ ] The button reads "Toggle trailing items count (2/4)".
+    - [ ] None of "Toggle 1-1", "Toggle 1-2", "Toggle 1-3" has a checkmark.
+    - [ ] No toast is displayed.
+
+11. Tap "Submenu with Radio".
+
+    - [ ] "Radio 1-1" has a checkmark.
+
+12. Close the menu, then tap the header title "Header Menu".
+
+    - [ ] "Title Toggle" has a checkmark.
+
+13. Close the menu, open "Menu 1", tap "Toggle 1-3", tap the toast, tap
+    "keepsMenuPresented: false", then open "Menu 1".
+
+    - [ ] The button reads "keepsMenuPresented: true".
+    - [ ] "Toggle 1-3" has no checkmark.
+    - [ ] No toast is displayed.
 
 ---
 
@@ -92,16 +170,16 @@ visible.
 1. Relaunch the app and navigate to the **Stack Header Menu (iOS)** screen.
 2. Toggle `menuRepresentation`
 3. Click `Toggle trailing items count` to get 4 items present
-    - [ ] Two items moved to overflow menu
+   - [ ] Two items moved to overflow menu
 4. Open the overflow menu
-    - [ ] Overflowed regular items appear as **Repr #** submenus
-    - [ ] Custom items are present and represented in the same way as regular items
+   - [ ] Overflowed regular items appear as **Repr #** submenus
+   - [ ] Custom items are present and represented in the same way as regular items
 5. Open Repr 0
-    - [ ] It contains three radio items, Repr 0 Radio 1 is selected by default
+   - [ ] It contains three radio items, Repr 0 Radio 1 is selected by default
 6. Click Repr 0 Radio 2
-    - [ ] A toast "Repr 0 selected "repr-radio-0-2"" is displayed
-    - [ ] When reopened, Repr 0 Radio 2 is checked and Radio 1 is not
+   - [ ] A toast "Repr 0 selected "repr-radio-0-2"" is displayed
+   - [ ] When reopened, Repr 0 Radio 2 is checked and Radio 1 is not
 7. Under `setMenuItemOptions`, select "repr-radio-0-3", `title`: "New Title", `toggleState`: "true". Click "Send setMenuItemOptions". Open Repr 0.
-    - [ ] A toast "Repr 0 selected "repr-radio-0-3"" is displayed
-    - [ ] It contains three radio items: "Repr 0 Radio 1", "Repr 0 Radio 2", "New Title"
-    - [ ] "New Title" item is selected
+   - [ ] A toast "Repr 0 selected "repr-radio-0-3"" is displayed
+   - [ ] It contains three radio items: "Repr 0 Radio 1", "Repr 0 Radio 2", "New Title"
+   - [ ] "New Title" item is selected
