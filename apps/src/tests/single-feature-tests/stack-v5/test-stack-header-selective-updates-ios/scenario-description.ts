@@ -4,7 +4,7 @@ export const scenarioDescription: ScenarioDescription = {
   name: 'Stack Header Selective Updates (iOS)',
   key: 'test-stack-header-selective-updates-ios',
   details:
-    'Tests that header item updates are scoped — only the changed item rebuilds. On iOS 26+, item rebuild causes a visible flash/blur on the affected bar button.',
+    'Changing, adding, removing, reordering or resizing one header item leaves the other items in place without a flash, and custom items keep reacting to touches where they are drawn.',
   platforms: ['ios'],
   e2eCoverage: 'incomplete',
   smokeTest: false,
