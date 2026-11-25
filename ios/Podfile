@@ -1,0 +1,14 @@
+ENV['RNS_GAMMA_ENABLED'] = '1'
+ENV['RCT_USE_RN_DEP'] = '1'
+ENV['RCT_USE_PREBUILT_RNCORE'] = '1'
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+platform :ios, '16.4'
+prepare_react_native_project!
+target 'FrameProbe' do
+  use_frameworks! :linkage => :static
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
+  use_react_native!(:path => '../node_modules/react-native', :app_path => File.expand_path('..', __dir__))
+  post_install do |installer|
+    react_native_post_install(installer,'../node_modules/react-native', :mac_catalyst_enabled => false)
+  end
+end
